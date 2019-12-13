@@ -1,8 +1,6 @@
 package skeleton.answers;
 
-import javax.validation.constraints.Null;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Question2 {
 
