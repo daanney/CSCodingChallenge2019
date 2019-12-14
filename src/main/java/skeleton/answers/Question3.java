@@ -27,11 +27,29 @@ public class Question3 {
         //System.out.println(IntStream.of(scores).boxed().collect(Collectors.toList()));
 
         Arrays.sort(alice);
-        int x = scoreLength, medianScore = alice[alice.length>1 ? alice.length / 2 : 0];
-        while(x-->0 && scores[x] > medianScore);
+        int x = scoreLength, middleX = scoreLength>1 ? scoreLength/2 : 0, middle = scores[middleX];
+        int[] ranks = new int[alice.length];
+        for(int ai=0; ai<alice.length; ai++) {
+            x = scoreLength;//alice[ai] > middle ? middleX : 0;
+            while(x-->0 && scores[x] > alice[ai]);
+            ranks[ai] = x;
+        }
+
+        x = ranks.length - 1;
+        int mode = -1, freq = 1;
+        while(x-->1 && (freq > 0 || mode < 0)) {
+            if(ranks[x] == ranks[x-1]) {
+                mode = ranks[x];
+                freq++;
+            }else freq = 0;
+        }
+        if(mode < 0) mode = ranks[0];
+        //System.out.println(IntStream.of(ranks).boxed().collect(Collectors.toList()));
+        //System.out.println("m: " + mode);
+        //System.out.println("f: " + freq);
 
         //System.out.println(Arrays.asList(medianScore, scores[x], scoreLength, x));
-        return scoreLength - x;
+        return scoreLength - mode;
     }
 
     public static void main(String[] args) {
