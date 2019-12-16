@@ -5,30 +5,23 @@ import java.util.Arrays;
 public class Question1 {
 
     public static double calculateTotalPayment(double initialLevelOfDebt, double interestPercentage, double repaymentPercentage) {
-        initialLevelOfDebt = round(initialLevelOfDebt, 2);
-        return round(initialLevelOfDebt / 10d + calculateTotalPayment(
+        return Math.round(initialLevelOfDebt / 10d + calculateTotalPayment(
             initialLevelOfDebt,
             interestPercentage / 100d + 1,
-            round(initialLevelOfDebt / 100d * repaymentPercentage, 2),
-            0), 0);
+            initialLevelOfDebt / 100d * repaymentPercentage,
+            0));
     }
 
     private static double calculateTotalPayment(double debt, double intPct, double repayVal, double month) {
         //System.out.println(Arrays.asList(debt, intPct, repayVal, month));
-        return debt < 50 ? month * repayVal + debt
-            : calculateTotalPayment(round(debt * intPct, 2) - repayVal, intPct, repayVal, month + 1);
-    }
-
-    public static double round(double nbr, int digits) {
-        double _digits = 100d;//Math.pow(10,digits);1
-        return Math.round(nbr*_digits) / _digits;
+        return debt < repayVal ? month * repayVal + debt
+            : calculateTotalPayment(debt * intPct - repayVal, intPct, repayVal, month + 1);
     }
 
     public static void main(String[] args) {
         double result;
         result = calculateTotalPayment(962.3967577039542,4.664795277139649,14.233004676691777);
         System.out.println("Expected:1286.0 | Result:" + result + " = " + (1286.0 == result ? "CORRECT" : "NOPE"));
-        System.exit(0);
         result = calculateTotalPayment(672.1811125903685,0.36779936704624105,18.146339035173796);
         System.out.println("Expected:747.0 | Result:" + result + " = " + (747.0 == result ? "CORRECT" : "NOPE"));
         result = calculateTotalPayment(39.38851204510813,8.173884308208793,17.01799243147917);
